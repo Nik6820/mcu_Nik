@@ -3,6 +3,7 @@
 #include "stdlib.h"
 #include "pico/stdlib.h"
 #include "string.h"
+#include "stdint.h"
 
 static api_t* api = {0};
 static int commands_count = 0;
@@ -69,4 +70,15 @@ void protocol_task_handle(char* command_string)
     // Выводим ошибку, если команда не была найдена в списке команд
     printf("Ошибка: неизвестная команда '%s'\n", command_name);
     return;
+}
+
+void mem_prot(uint32_t addr){
+    uint32_t value = *(uint32_t*)addr;
+    printf("Value at 0x%08X: 0x%08X\n", addr, value);
+}
+
+
+void wmem_prot(uint32_t addr, uint32_t value){
+    *(uint32_t*)addr = value;
+    printf("Written 0x%08X to address 0x%08X\n", value, addr);
 }

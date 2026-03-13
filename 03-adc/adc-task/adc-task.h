@@ -10,7 +10,7 @@ void adc_task_init();
 
 void adc_task_handle(); 
 
-void adc_task_set_state(); 
+void adc_task_set_state(adc_task_state_t state);
 
 float adc_task_getV();
 

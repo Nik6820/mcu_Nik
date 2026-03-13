@@ -44,6 +44,14 @@ void adc_t_callback(const char* args)
     float temp_C=adc_task_getT();
     printf("%f\n", temp_C);
 }
+void tm_start_callback(const char* args){
+    adc_task_set_state(ADC_TASK_STATE_RUN);
+    printf("Telemetry started.\n");
+}
+void tm_stop_callback(const char* args){
+    adc_task_set_state(ADC_TASK_STATE_IDLE);
+    printf("Telemetry stopped.\n");
+}
 
 api_t device_api[] =
 {
@@ -53,6 +61,8 @@ api_t device_api[] =
  {"blink", led_blink_callback, "turns led in blink state"},
  {"get_adc", adc_callback, "get voltage by adc"},
  {"get_temp", adc_t_callback, "get temperature by adc"},
+ {"tm_start", tm_start_callback, "start getting temp"},
+ {"tm_stop", tm_stop_callback, "stop getting temp"},
  {NULL, NULL, NULL}
 };
 
@@ -66,7 +76,7 @@ int main(){
     {
         led_task_handle();
         char* command = stdio_task_handle();
-        
+        adc_task_handle();
         if (command != NULL)
         {                   
             protocol_task_handle(command);

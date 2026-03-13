@@ -5,6 +5,7 @@
 
 const uint LED_PIN = 25;
 uint LED_BLINK_PERIOD_US = 500000;
+bool st=0;
 
 uint64_t led_ts;
 led_state_t led_state;
@@ -32,10 +33,9 @@ void led_task_handle()
         if (time_us_64() > led_ts)
         {
             led_ts = time_us_64() + (LED_BLINK_PERIOD_US / 2);
-            gpio_put(LED_PIN, 1);
-            sleep_us(LED_BLINK_PERIOD_US / 2);
-            gpio_put(LED_PIN, 0);
-            sleep_us(LED_BLINK_PERIOD_US / 2);
+            // ваш код
+            gpio_put(LED_PIN, st);
+            st=!st;
         }
         break;
     default:
