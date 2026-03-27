@@ -88,7 +88,32 @@ void write_reg_callback(const char* args)
 
     bme280_write_reg((uint8_t)addr, (uint8_t)value);
 }
+void temp_raw_callback(const char* args){
+    uint16_t counts = bme280_read_temp_raw();
+    printf("temp counts %d \n", counts);
+}
+void pres_raw_callback(const char* args){
+    uint16_t counts = bme280_read_press_raw();
+    printf("press counts %d \n", counts);
+}
+void hum_raw_callback(const char* args){
+    uint16_t counts = bme280_read_hum_raw();
+    printf("hum counts %d \n", counts);
+}
+void temp_callback(const char* args) {
+    float C = bme280_read_temp_celsius();
+    printf("%f", C);
+}
 
+void pres_callback(const char* args) {
+    float P = bme280_read_press_pascal();
+    printf("%f", P);
+}
+
+void hum_callback(const char* args) {
+    float H = bme280_read_hum_percent();
+    printf("%f", H);
+}
 api_t device_api[] =
 {
  {"version", version_callback, "get device name and firmware version"},
@@ -97,6 +122,12 @@ api_t device_api[] =
  {"blink", led_blink_callback, "turns led in blink state"},
  {"read_reg", read_reg_callback, "read registers on BME280"},
  {"write_reg", write_reg_callback, "write registers on BME280"},
+ {"temp_raw", temp_raw_callback, "get temp in counts"},
+ {"pres_raw", pres_raw_callback, "get pres in counts"},
+ {"hum_raw", hum_raw_callback, "get hum in counts"},
+ {"temp", temp_callback, "get temp"},
+ {"pres", pres_callback, "get pres"},
+ {"hum", hum_callback, "get hum"},
  {NULL, NULL, NULL}
 };
 

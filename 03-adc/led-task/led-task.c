@@ -23,11 +23,10 @@ void led_task_handle()
     {
     case LED_STATE_OFF:
         gpio_put(LED_PIN, 0);
-        sleep_ms(50);
         break;
     case LED_STATE_ON:
         gpio_put(LED_PIN, 1);
-        sleep_ms(50);
+
         break;
     case LED_STATE_BLINK:
         if (time_us_64() > led_ts)
